@@ -11,7 +11,8 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "user_id")
+	private Long userId;
 	
 	@Column(length=100)
 	private String address;
@@ -22,7 +23,7 @@ public class User {
 	@Column(length=10)
 	private String pin;
 	
-	@Column(length=10)
+	@Column(length=25)
 	private String url;
 	
 	
@@ -32,10 +33,10 @@ public class User {
 	@Column(length = 50)
 	private String name;
 	
-	@Column(length = 50)
+	@Column(length = 50,unique = true)
 	private String email;
 	
-	@Column(length = 50)
+	
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
@@ -52,64 +53,6 @@ public class User {
 	@OneToMany(mappedBy="userwlist")
 	private List<Wishlist> myWishlist = new ArrayList<>();	
 
-	public User(Long id, String name, String email, String password, RoleType role) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.role = role;
-	}
-	
-	
-
-	public User() {
-		super();
-	}
-
-
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public RoleType getRole() {
-		return role;
-	}
-
-	public void setRole(RoleType role) {
-		this.role = role;
-	}
-	
-	
 	
 	
 }

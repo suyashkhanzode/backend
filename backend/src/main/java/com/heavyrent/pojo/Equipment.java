@@ -15,27 +15,27 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "equip")
+@Table(name = "equip_tbl")
 public class Equipment {
 
 	@Id
-	@Column(name = "equi-id")
-	private Long equpid;
+	@Column(name = "equip-id")
+	private Long equpId;
 	
 	@Column(name = "equi_name")
-	private String name;
+	private String equipmentName;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 25)
 	private Category category;
 	
-	@Column(name = "yearofmfg")
+	@Column(name = "year_of_mfg")
 	private Year yearOfMfg;
 	
 	
 	private String description;
 	
-	
+	@Column(name = "insr_sts")
 	private boolean insurance_status;
 	
 	@Column(length = 50)
@@ -44,19 +44,27 @@ public class Equipment {
 	@Column(name = "model_no")
 	private String modelNo;
 	
-	
+	@Column(name = "cost_per_day")
 	private double costPerDay;
 	
 	@Column(length = 50)
 	private String parkLocation;
 	
-	private Long equip_img1;
+	private String equip_img1;
 	
-	private Long equip_img2;
+	private String equip_img2;
 	
 	private String rtoNo;
 	
 	private Status status;
+	
+	@Column(name = "insrc_inv")
+	private String insuranceInvoice;
+	
+	@Column(name = "rc_book")
+	private String rcBook;
+	
+	
 	
 	@OneToMany(mappedBy="equipwlist")
 	private List<Wishlist> Equipmentlist = new ArrayList<>();
@@ -70,38 +78,6 @@ public class Equipment {
 		
 	}
 
-	public Equipment(Long equpid, String name, String modelNo) {
-		super();
-		this.equpid = equpid;
-		this.name = name;
-		this.modelNo = modelNo;
-	}
-
-	public Long getEqupid() {
-		return equpid;
-	}
-
-	public void setEqupid(Long equpid) {
-		this.equpid = equpid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getModelNo() {
-		return modelNo;
-	}
-
-	public void setModelNo(String modelNo) {
-		this.modelNo = modelNo;
-	}
-	
-	
 	
 	
 }
