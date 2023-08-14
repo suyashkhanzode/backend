@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class Document {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long d_id;
 	
 	
 	    private String adhar;
