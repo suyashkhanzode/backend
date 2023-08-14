@@ -13,8 +13,10 @@ import jakarta.persistence.Table;
 public class Document {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	@Column(name = "document_id")
 	private Long documentId;
+
 	
 	@Column(name = "aadhar_doc")
 	    private String aadharDoc;
