@@ -1,5 +1,7 @@
 package com.heavyrent.pojo;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,4 +27,7 @@ public class Wishlist {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User userwlist;
+	
+	@Column(name = "date_addin_wishlist")
+	private Date addedInWishlist;
 }
