@@ -5,13 +5,17 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.heavyrent.dao.EquipmentDao;
 import com.heavyrent.pojo.Equipment;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 
+@Service
+@Transactional
 public class FileServiceImpl implements FileService {
 
 	@Autowired
@@ -46,7 +50,9 @@ public class FileServiceImpl implements FileService {
 		
 		   String path = folderlocation.concat(img.getOriginalFilename());
 		
-		  
+		    eqp.setEquip_img1(path);
+		   
+		    dao.save(eqp);
 		
 		return path;
 	}
