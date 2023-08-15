@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "user_tbl")
 public class User {
@@ -50,8 +54,7 @@ public class User {
 	@JoinColumn(name="doc_id")
 	private Document document;
 	
-	@OneToMany(mappedBy="userwlist")
-	private List<Wishlist> myWishlist = new ArrayList<>();	
+	
 
 	
 	
