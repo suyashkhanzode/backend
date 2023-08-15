@@ -41,7 +41,7 @@ public class Orders {
 	@Column(name = "order_date")
 	private Date orderDate;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "equipment_id")
 	private Equipment equipment;
 	
