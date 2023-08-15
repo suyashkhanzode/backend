@@ -54,8 +54,7 @@ public class User {
 	@JoinColumn(name="doc_id")
 	private Document document;
 	
-	@OneToMany(mappedBy="userwlist")
-	private List<Wishlist> myWishlist = new ArrayList<>();	
+	
 
 	
 	
