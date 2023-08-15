@@ -17,10 +17,17 @@ public class EquipmentServiceImpl implements EquipmentService {
 	
 	@Override
 	public Equipment addEquipment(Equipment equipment) {
+		
 		//To save equipment
 		 Equipment eqp = dao.save(equipment);
 		
 		return eqp;
+	}
+
+	@Override
+	public Equipment getEquipment(long id) {
+		
+		return null;
 	}
 
 }
