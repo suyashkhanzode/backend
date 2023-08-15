@@ -1,57 +1,59 @@
 package com.heavyrent.controller;
 
-import com.heavyrent.service.EmailService;
-import  com.heavyrent.pojo.OtpGenerator;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.heavyrent.dto.EmailRequestDTO;
+import com.heavyrent.dto.EmailResponseDTO;
+import com.heavyrent.dto.VerifyOTPRequestDTO;
+import com.heavyrent.dto.VerifyOTPResponseDTO;
+import com.heavyrent.service.OTPService;
+
+
 
 @RestController
-@RequestMapping("/otp")
+@RequestMapping("/api")
 public class OtpController {
 	
 	@Autowired
-    private EmailService emailService;
-	String storedOtp ;
-
-    public OtpController(EmailService emailService) {
-        this.emailService = emailService;
+    private OTPService otpService;
+	
+	String storedOtp;
+    
+    public OtpController(OTPService otpService) {
+        this.otpService = otpService;
     }
 
-    @PostMapping("/send/{email}")
-    public String sendOtp(@PathVariable String email) {
-        // Generate OTP
-        storedOtp = OtpGenerator.generateOtp();
-       //System.out.println("In post");
-        
-        // Send OTP via email
-        emailService.sendOtpEmail(email, storedOtp);
+    @PostMapping("/send-otp")
+    public ResponseEntity<EmailResponseDTO> sendOTP(@RequestBody EmailRequestDTO emailRequest) {
+        String email = emailRequest.getEmail();
 
-        return "OTP sent successfully";
+        // Generate OTP
+        String otp = otpService.generateOTP();
+
+        // Store OTP in cache with the email
+        otpService.storeOTPInBackend(email, otp);
+
+        // Send OTP to the user's email
+        otpService.sendOTPByEmail(email, otp);
+
+        String responseMessage = "OTP sent successfully!";
+        EmailResponseDTO responseDTO = new EmailResponseDTO(email, responseMessage);
+
+        return ResponseEntity.ok(responseDTO);
     }
     
-    @PostMapping("/verifyotp/{otpEntered}")
-    public String verifyOTP( @PathVariable String otpEntered) {
-      
+    
+    @PostMapping("/verify-otp")
+    public ResponseEntity<VerifyOTPResponseDTO> verifyOTP(@RequestBody VerifyOTPRequestDTO request) {
         
-        if (otpEntered == null) {
-            return "User not found";
-        }
-        
-        else if (storedOtp != null && storedOtp.equals(otpEntered)) {
-            // OTP matches, perform your desired action
-        	 storedOtp = null;
-            return "OTP verification successful";
-        } 
-        else 
-        {
-        	storedOtp = null;
-            return "Invalid OTP";
-        } 
-       
+    	String email = request.getEmail();
+        String enteredOTP = request.getEnteredOTP();
+
+        VerifyOTPResponseDTO response = otpService.verifyOTP(email, enteredOTP);
+
+        return ResponseEntity.ok(response);
     }
-  
-   
+      
 }
