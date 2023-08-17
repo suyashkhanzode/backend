@@ -12,10 +12,6 @@ import com.heavyrent.pojo.RoleType;
 import com.heavyrent.pojo.User;
 import com.heavyrent.service.RegistrationService;
 
-
-
-
-
 @RestController
 @RequestMapping("/api")
 public class RegistrationController {

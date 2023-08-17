@@ -7,28 +7,40 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.heavyrent.dao.OTPDao;
 import com.heavyrent.dto.VerifyOTPResponseDTO;
+import com.heavyrent.pojo.OTPRecord;
 
-import java.util.HashMap;
-import java.util.Map;
+//import jakarta.transaction.Transactional;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+//import java.util.HashMap;
+//import java.util.Map;
 import java.util.Random;
 
 @Service
 public class OTPServiceImpl implements OTPService {
 	
     private static final String DIGITS = "0123456789";
-    private static final int OTP_LENGTH = 6;
+    private static final int OTP_LENGTH = 4;
     
     // In-memory storage
-    private final Map<String, String> otpStorage = new HashMap<>(); // In-memory storage
+    //private final Map<String, String> otpStorage = new HashMap<>(); // In-memory storage
    
 
     @Autowired
     private JavaMailSender javaMailSender;
     
     @Autowired
-    public OTPServiceImpl(JavaMailSender javaMailSender) {
+    private final OTPDao otpDao;
+    
+    @Autowired
+    public OTPServiceImpl(JavaMailSender javaMailSender,OTPDao otpDao) {
         this.javaMailSender = javaMailSender;
+        this.otpDao = otpDao;
     }
     
     //======================= To check if entered email already exist in database ======================
@@ -54,10 +66,6 @@ public class OTPServiceImpl implements OTPService {
          return otp.toString();
 	}
     
-    @Override
-    public void storeOTPInBackend(String email, String otp) {
-        otpStorage.put(email, otp);
-    }
 
 	@Override
 	public void sendOTPByEmail(String email, String otp) {
@@ -70,24 +78,57 @@ public class OTPServiceImpl implements OTPService {
         javaMailSender.send(message);
 		
 	}
+	
+    @Override
+    @Transactional
+    public void storeOTPInBackend(String email, String otp) {
+       // otpStorage.put(email, otp);
+    	 OTPRecord otpRecord = new OTPRecord();
+         otpRecord.setEmail(email);
+         otpRecord.setOtp(otp);
+         otpRecord.setTimestamp(LocalDateTime.now().plusMinutes(5)); // OTP validity period
+
+         otpDao.save(otpRecord);
+    }
     
     
 	 //========================= To Receive and Verify OTP Entered by user ===================================== ===
     
-	  @Override
-	    public VerifyOTPResponseDTO verifyOTP(String email, String enteredOTP) {
-	        String storedOTP = otpStorage.get(email);
+    @Override
+    @Transactional(readOnly = true)
+    public VerifyOTPResponseDTO verifyOTP(String email, String enteredOTP) {
+        Optional<OTPRecord> otpRecordOptional = otpDao.findLatestValidOTPByEmail(email);
 
-	        VerifyOTPResponseDTO response = new VerifyOTPResponseDTO(email, "");
+        VerifyOTPResponseDTO response = new VerifyOTPResponseDTO();
+        response.setEmail(email);
 
-	        if (storedOTP != null && storedOTP.equals(enteredOTP)) {
-	            response.setMessage("OTP verification succeeded!");
-	        } else {
-	            response.setMessage("OTP verification failed!");
-	        }
+      if (otpRecordOptional.isPresent()) {
+            OTPRecord otpRecord = otpRecordOptional.get();
 
-	        return response;
-	    }
+          if (otpRecord.getOtp().equals(enteredOTP)) {
+               if (otpRecord.getTimestamp().isAfter(LocalDateTime.now())) {
+                    response.setSuccess(true);
+                    response.setMessage("OTP verification succeeded!");
+                } 
+          
+               else {
+                    response.setSuccess(false);
+                    response.setMessage("OTP has expired.");	
+                }
+           } 
+         else {
+                response.setSuccess(false);
+                response.setMessage("Invalid OTP entered.");
+            }
+        } 
+      else {
+            response.setSuccess(false);
+            response.setMessage("No valid OTP found for this email.");
+        }
+
+        return response;
+    }
+
 
 	
 	

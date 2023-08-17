@@ -14,5 +14,7 @@ import lombok.ToString;
 public class VerifyOTPResponseDTO {
    
 	private String email;
+	private boolean success;
     private String message;
+	
 }
