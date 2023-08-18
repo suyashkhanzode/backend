@@ -3,6 +3,7 @@ package com.heavyrent.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.heavyrent.custom_exception.WishlistException;
 import com.heavyrent.dao.EquipmentDao;
 import com.heavyrent.dto.EquipmentDto;
 import com.heavyrent.pojo.Equipment;
@@ -27,8 +28,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 	@Override
 	public Equipment getEquipment(long id) {
-		
-		return null;
+		  
+	Equipment equipment=	 dao.findById(id).orElseThrow(()->new WishlistException("Invalid equipment ID !!!!!"));
+		return equipment;
 	}
 
 	@Override

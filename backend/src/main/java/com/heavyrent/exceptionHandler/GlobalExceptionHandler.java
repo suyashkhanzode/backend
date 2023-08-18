@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.heavyrent.custom_exception.ResourceNotFoundException;
 import com.heavyrent.custom_exception.WishlistException;
+import com.heavyrent.dto.ErrorResponse;
 
 
 @RestControllerAdvice 
@@ -20,5 +21,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 	
+	
+	
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ErrorResponse> ResourceNotFoundExceptionHandler(ResourceNotFoundException e) {
+		System.out.println("method arg invalid " + e);
+		String message =e.getMessage();
+		ErrorResponse apiResponse=new ErrorResponse(message,false);
+		return new ResponseEntity<ErrorResponse>(apiResponse,HttpStatus.NOT_FOUND);
+	}
 	
 }
