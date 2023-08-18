@@ -3,6 +3,8 @@ package com.heavyrent.dto;
 import java.time.Year;
 
 import com.heavyrent.pojo.Category;
+import com.heavyrent.pojo.Status;
+import com.heavyrent.pojo.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -29,7 +31,9 @@ public class EquipmentDto {
 
 	private Year yearOfMfg;
 	
+	private String description;
 	
+	private boolean insurance_status;
 
 	private String city;
 	
@@ -39,4 +43,13 @@ public class EquipmentDto {
 	
 	private double costPerDay;
 	
+	private String parkLocation;
+	
+    private String rtoNo;
+	
+	private Status status;
+	
+	//private User organization;
+	
+	private long orgId ;
 }

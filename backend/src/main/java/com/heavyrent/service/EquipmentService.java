@@ -7,7 +7,9 @@ public interface EquipmentService {
 
 	public Equipment addEquipment(Equipment equipment);
 	
-	public Equipment getEquipment(long id);
+	public EquipmentDto getEquipment(long id);
 	
 	public EquipmentDto getEquipmentForWishlist(Equipment equipment);
+	
+
 }

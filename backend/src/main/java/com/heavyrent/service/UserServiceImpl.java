@@ -20,8 +20,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserbyid(Long user_id) {
 		// TODO Auto-generated method stub
-      User user=userDao.findById(user_id).orElseThrow(()->new WishlistException("Invalid user ID !!!!!"));
-		return user;
+      //User user=userDao.findById(user_id).orElseThrow(()->new WishlistException("Invalid user ID !!!!!"));
+		//return user;
+		return userDao.findById(user_id)
+	            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 	}
 
 //	@Override
