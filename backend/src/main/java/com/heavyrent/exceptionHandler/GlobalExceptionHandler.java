@@ -11,6 +11,7 @@ import com.heavyrent.custom_exception.WishlistException;
 import com.heavyrent.dto.ErrorResponse;
 
 
+
 @RestControllerAdvice 
 public class GlobalExceptionHandler {
 	
@@ -20,10 +21,7 @@ public class GlobalExceptionHandler {
 //		message="invalid id";
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
-	
-	
-	
-	
+
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ErrorResponse> ResourceNotFoundExceptionHandler(ResourceNotFoundException e) {
 		System.out.println("method arg invalid " + e);
@@ -31,5 +29,5 @@ public class GlobalExceptionHandler {
 		ErrorResponse apiResponse=new ErrorResponse(message,false);
 		return new ResponseEntity<ErrorResponse>(apiResponse,HttpStatus.NOT_FOUND);
 	}
-	
+
 }

@@ -69,6 +69,8 @@ public class Equipment {
 	private String rtoNo;
 	
 	@Enumerated(EnumType.STRING)
+
+	@Column(length = 25)
 	private Status status;
 	
 	@Column(name = "insrc_inv")
@@ -85,6 +87,7 @@ public class Equipment {
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "org_id")
 	private User organization;
+	
 	
 
 

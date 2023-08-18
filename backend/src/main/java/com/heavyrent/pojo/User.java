@@ -47,7 +47,7 @@ public class User {
 	@Column(length = 25)
 	private RoleType role;
 	
-	@OneToMany(mappedBy = "organization",cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "organization", cascade =  CascadeType.ALL,orphanRemoval = true)
 	private List<Equipment> myEquipments = new ArrayList<Equipment>();
 	
 	@OneToOne

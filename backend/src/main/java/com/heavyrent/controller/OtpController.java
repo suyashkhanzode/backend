@@ -3,6 +3,7 @@ package com.heavyrent.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.JsonViewRequestBodyAdvice;
 
 import com.heavyrent.dto.EmailRequestDTO;
 import com.heavyrent.dto.EmailResponseDTO;
@@ -27,6 +28,8 @@ public class OtpController {
 
     @PostMapping("/send-otp")
     public ResponseEntity<EmailResponseDTO> sendOTP(@RequestBody EmailRequestDTO emailRequest) {
+    	
+ 
         String email = emailRequest.getEmail();
 
         // Generate OTP
