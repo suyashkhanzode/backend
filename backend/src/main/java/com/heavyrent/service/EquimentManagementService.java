@@ -8,7 +8,7 @@ import com.heavyrent.pojo.User;
 
 public interface EquimentManagementService {
 	
-	GetAllEquipmentDto getAllEquipmentForOrganization(User user);
+	List<GetAllEquipmentDto> getAllEquipmentForOrganization(User user);
 
 	public  Status  disableEquipment(long id);
 	
