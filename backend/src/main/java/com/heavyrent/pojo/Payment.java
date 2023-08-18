@@ -12,7 +12,16 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="payments_tbl")
 public class Payment {
@@ -26,20 +35,23 @@ public class Payment {
 	@Column(length = 25)
 	private PaymentStatus payStatus;
 	
-	@Column(name="paymnt_doc")
-	private String paymentDocument;
+//	@Column(name="paymnt_doc")
+//	private String paymentDocument;
+//	
+
+	@Column(name = "org_id")
+	private long organizationId;
 	
-	@ManyToOne
-	@JoinColumn(name = "org_id")
-	private User organization;
 	
-	@ManyToOne
-	@JoinColumn(name = "cust_id")
-	private User customer;
+	@Column(name = "cust_id")
+	private long customerId;
 	
 	@OneToOne
 	@JoinColumn(name = "order_id")
 	private Orders order;
+	
+	
+	private double amount;
 
 }
 
