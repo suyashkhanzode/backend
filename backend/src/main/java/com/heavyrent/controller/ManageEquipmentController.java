@@ -1,5 +1,6 @@
 package com.heavyrent.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tomcat.util.json.JSONParser;
@@ -28,20 +29,20 @@ public class ManageEquipmentController {
 	private UserService userService;
 
 	@GetMapping("/geteqp/{orgId}")
-	public List<Equipment> getAllEquipmentForOrg(@PathVariable long orgId)
+	public List<GetAllEquipmentDto> getAllEquipmentForOrg(@PathVariable long orgId)
 	{
 		User user = userService.getUserbyid(orgId);
 		
-		user.getMyEquipments();
-		System.out.println(user.getMyEquipments());
 		
-		GetAllEquipmentDto dto = new GetAllEquipmentDto();
+		
+		
+		List<GetAllEquipmentDto> dto = new ArrayList<GetAllEquipmentDto>();
 		
 		
 		 dto = service.getAllEquipmentForOrganization(user);
 		
 		 
-		 return dto.getList();
+		 return dto;
 		
 	}
 	

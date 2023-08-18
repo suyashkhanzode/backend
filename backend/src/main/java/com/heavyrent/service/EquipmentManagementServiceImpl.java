@@ -1,5 +1,6 @@
 package com.heavyrent.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -30,17 +31,36 @@ public class EquipmentManagementServiceImpl implements EquimentManagementService
 	private ModelMapper map;
 	
 	@Override
-	public  GetAllEquipmentDto getAllEquipmentForOrganization(User user) {
-		//List<Equipment> list = null;
-		List<Equipment> list =  dao.findByOrganization(user) ;
+	public List<GetAllEquipmentDto> getAllEquipmentForOrganization(User user) {
+		List<Equipment> list = null;
+		list =  dao.findByOrganization(user) ;
 		
-		GetAllEquipmentDto dto = new GetAllEquipmentDto();
+		List<GetAllEquipmentDto> getEqpList = new ArrayList<GetAllEquipmentDto>();
 		
-		//list = dao.findByOrganization(user);
+		for (Equipment eqp : list) {
+			 
+			GetAllEquipmentDto dto = new GetAllEquipmentDto();
+			User org = new User();
+			    dto.setCategory(eqp.getCategory());
+			    dto.setCity(eqp.getCity());
+			    dto.setCostPerDay(eqp.getCostPerDay());
+			    dto.setDescription(eqp.getDescription());
+			    dto.setEquipmentName(eqp.getEquipmentName());
+			    dto.setEqupId(eqp.getEqupId());
+			    dto.setYearOfMfg(eqp.getYearOfMfg());
+			    dto.setStatus(eqp.getStatus());
+			    dto.setRtoNo(eqp.getRtoNo());
+			    dto.setModelNo(eqp.getModelNo());
+			    org.setUserId(eqp.getOrganization().getUserId());
+			    dto.setOrganization(org);
+			    getEqpList.add(dto);
+			
+		}
 		
-		dto.setList(list);
 		
-		return map.map(dto, GetAllEquipmentDto.class);
+		
+		
+		return getEqpList;
 	}
 
 	@Override
