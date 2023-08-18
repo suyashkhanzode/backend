@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.heavyrent.custom_exception.WishlistException;
 import com.heavyrent.dao.EquipmentDao;
 import com.heavyrent.dao.UserDao;
 import com.heavyrent.dto.EquipmentDto;
@@ -37,6 +38,20 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	@Override
+	public Equipment getEquipment(long id) {
+		  
+	Equipment equipment=	 dao.findById(id).orElseThrow(()->new WishlistException("Invalid equipment ID !!!!!"));
+		return equipment;
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
 	public EquipmentDto getEquipment(long id) {
 		   
 		    EquipmentDto dto = new EquipmentDto();
@@ -59,6 +74,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 		    dto.setModelNo(eqp.getModelNo());
 		
 		return dto;
+
 	}
 	
 	

@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -68,6 +69,7 @@ public class Equipment {
 	private String rtoNo;
 	
 	@Enumerated(EnumType.STRING)
+
 	@Column(length = 25)
 	private Status status;
 	
@@ -82,7 +84,7 @@ public class Equipment {
 	@OneToMany(mappedBy="equipwlist")
 	private List<Wishlist> Equipmentlist = new ArrayList<>();
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "org_id")
 	private User organization;
 	
