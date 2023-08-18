@@ -2,13 +2,14 @@ package com.heavyrent.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-public class LoginErrorResponse {
-
-	private String message;
-	private boolean RequestStatus;
+public class OrderPlacedResponseDto {
+	private int orderId;
+	
 }
