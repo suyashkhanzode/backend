@@ -1,5 +1,6 @@
 package com.heavyrent.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +111,20 @@ public class OrderController {
         User user=	 userservice.getUserbyid(cust_id);
  		 try {
  			 List<OrderResponseDto> order = orderservice.getOrderForCust(user);
+ 			 
+ 	            return ResponseEntity.ok(order);
+ 	        } catch (Exception e) {
+ 	        	 throw new WishlistException("Failed to retrieve Order items.");
+ 	        }
+ 		 
+ 	 }
+         
+         @GetMapping("/get/{org_id}/{date}")
+ 	    public ResponseEntity<List<OrderResponseDto>> getOrder(@RequestParam Long org_id,Date date) {
+ 	       
+ 		
+ 		 try {
+ 			 List<OrderResponseDto> order = orderservice.getTodaysOrderOfOrg(org_id,date);
  			 
  	            return ResponseEntity.ok(order);
  	        } catch (Exception e) {

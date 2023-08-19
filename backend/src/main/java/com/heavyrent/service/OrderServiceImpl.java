@@ -1,9 +1,11 @@
 package com.heavyrent.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.el.stream.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.heavyrent.dao.EquipmentDao;
 import com.heavyrent.dao.OrderDao;
 import com.heavyrent.dto.OrderRequestDto;
 import com.heavyrent.dto.OrderResponseDto;
+import com.heavyrent.dto.UserResponse;
 import com.heavyrent.pojo.Equipment;
 import com.heavyrent.pojo.OrderStatus;
 import com.heavyrent.pojo.Orders;
@@ -30,6 +33,9 @@ public class OrderServiceImpl  implements OrderService{
 	
 	@Autowired
 	private OrderDao orderdao;
+	
+	@Autowired
+	private ModelMapper mapper;
 	
 
 
@@ -142,6 +148,25 @@ public class OrderServiceImpl  implements OrderService{
                 dto.setEquipment(equipment);
                 dto.setPayment(payment);
                 orderdto.add(dto);
+		}
+		
+		return orderdto;
+	}
+
+	@Override
+	public List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date) {
+		List<Orders> ord=orderdao.findAllByOrderIdAndOrderOn(org_id,date);
+		List<OrderResponseDto> orderdto=new ArrayList<>();
+		Equipment equipment = new Equipment();
+		
+		for(Orders o : ord) {
+			equipment.setEquip_img1(o.getEquipment().getEquip_img1());   
+	        equipment.setEqupId(o.getEquipment().getEqupId());;
+	        equipment.setEquipmentName(o.getEquipment().getEquipmentName());
+	        equipment.setCity(o.getEquipment().getCity());
+	        equipment.setModelNo(o.getEquipment().getModelNo());
+	        o.setEquipment(equipment);
+	        orderdto.add(mapper.map(o, OrderResponseDto.class));
 		}
 		
 		return orderdto;

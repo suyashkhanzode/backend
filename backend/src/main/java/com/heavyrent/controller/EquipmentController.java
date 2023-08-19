@@ -40,7 +40,7 @@ public class EquipmentController {
 	{
 		
 		 
-		EquipmentDto eqp =  service.getEquipment(eqpId);
+		EquipmentDto eqp =  service.getEquipmentDto(eqpId);
 				   
 	     return eqp;
 	}

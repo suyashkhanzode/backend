@@ -44,6 +44,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 		return equipment;
 
   
+	}
   
   
   
@@ -51,8 +52,7 @@ public class EquipmentServiceImpl implements EquipmentService {
   
   
   
-  
-	public EquipmentDto getEquipment(long id) {
+	public EquipmentDto getEquipmentDto(long id) {
 		   
 		    EquipmentDto dto = new EquipmentDto();
 		   Equipment eqp =   dao.findById(id).orElseThrow(() -> new RuntimeException());
