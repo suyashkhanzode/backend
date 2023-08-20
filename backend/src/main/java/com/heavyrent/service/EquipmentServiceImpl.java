@@ -1,9 +1,12 @@
 package com.heavyrent.service;
 
 
+import java.io.IOException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.heavyrent.custom_exception.WishlistException;
 import com.heavyrent.dao.EquipmentDao;
@@ -28,12 +31,16 @@ public class EquipmentServiceImpl implements EquipmentService {
 	@Autowired
 	private UserDao daoUser;
 	
+	
+	
 	@Override
-	public Equipment addEquipment(Equipment equipment) {
+	public Equipment addEquipment(Equipment equipment)  {
 		
 		//To save equipment
 		 Equipment eqp = dao.save(equipment);
 		
+		 
+		 
 		return eqp;
 	}
 
@@ -45,14 +52,14 @@ public class EquipmentServiceImpl implements EquipmentService {
 
   
   
+	}
   
   
   
   
   
   
-  
-	public EquipmentDto getEquipment(long id) {
+	public EquipmentDto getEquipmentDto(long id) {
 		   
 		    EquipmentDto dto = new EquipmentDto();
 		   Equipment eqp =   dao.findById(id).orElseThrow(() -> new RuntimeException());

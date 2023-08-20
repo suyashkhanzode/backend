@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 
+
 @SpringBootApplication
 
 public class BackendApplication {
@@ -33,5 +34,28 @@ public class BackendApplication {
 		return mapper;
 		
 	}
+	
+//	@Bean
+//	public PasswordEncoder passwordEncoder()
+//	{
+//		return new BCryptPasswordEncoder();
+//	
+//	}
+//	
+//	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//	String password = "password";
+//	String encodedPassword = passwordEncoder.encode(password);
+//
+//	private void sysout() {
+//		System.out.println("Password is         : " + password);
+//		System.out.println("Encoded Password is : " + encodedPassword);
+//		System.out.println();
+//
+//		
+//		boolean isPasswordMatch = passwordEncoder.matches(password, encodedPassword);
+//		System.out.println("Password : " + password + "   isPasswordMatch    : " + isPasswordMatch);
+//
+//	}
+	
 
 }

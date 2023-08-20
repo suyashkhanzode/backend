@@ -14,11 +14,11 @@ public interface FileService {
 
 	public byte[] downloadImg2(long id) throws IOException;
 
-	public String uploadInserInc(long id, MultipartFile img) throws IOException;
+	public String uploadInserInc(long id, MultipartFile file) throws IOException;
 
 	public byte[] downloadInserInc(long id) throws IOException;
 
-	public String uploadRcBook(long id, MultipartFile img) throws IOException;
+	public String uploadRcBook(long id, MultipartFile file) throws IOException;
 
 	public byte[] downloadRcBook(long id) throws IOException;
 }

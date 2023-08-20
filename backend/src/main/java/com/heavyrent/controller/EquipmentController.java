@@ -1,12 +1,17 @@
 package com.heavyrent.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.heavyrent.dto.EquipmentDto;
 import com.heavyrent.pojo.Equipment;
@@ -19,8 +24,8 @@ public class EquipmentController {
 	@Autowired
 	private EquipmentService service; 
 	
-	@PostMapping("/add")
-	public Equipment addEquipment(@RequestBody Equipment eqp)
+	@PostMapping(value =  "/add",consumes = MediaType.ALL_VALUE)
+	public Equipment addEquipment(@RequestBody Equipment eqp  )
 	{
 		 Equipment e = service.addEquipment(eqp);
 		 
@@ -40,7 +45,7 @@ public class EquipmentController {
 	{
 		
 		 
-		EquipmentDto eqp =  service.getEquipment(eqpId);
+		EquipmentDto eqp =  service.getEquipmentDto(eqpId);
 				   
 	     return eqp;
 	}

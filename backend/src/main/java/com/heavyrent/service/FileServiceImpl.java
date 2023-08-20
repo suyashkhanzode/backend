@@ -79,26 +79,34 @@ public class FileServiceImpl implements FileService {
 		eqp.setEquip_img2(path);
 
 		dao.save(eqp);
+		
+		System.out.println(eqp.toString());
 
 		return path;
 	}
 
 	@Override
 	public byte[] downloadImg2(long id) throws IOException {
-		// TODO Auto-generated method stub
+		
+		Equipment eqp = dao.findById(id).orElseThrow();
+
+		if (eqp.getEquip_img2() != null) {
+			return FileUtils.readFileToByteArray(new File(eqp.getEquip_img2()));
+		}
+
 		return null;
 	}
 
 	@Override
-	public String uploadInserInc(long id, MultipartFile img) throws IOException {
+	public String uploadInserInc(long id, MultipartFile file) throws IOException {
 
 		Equipment eqp = dao.findById(id).orElseThrow(() -> new RuntimeException());
 
-		String path = folderlocation.concat(img.getOriginalFilename());
+		String path = folderlocation.concat(file.getOriginalFilename());
 
-		FileUtils.writeByteArrayToFile(new File(path), img.getBytes());
+		FileUtils.writeByteArrayToFile(new File(path), file.getBytes());
 
-		eqp.setEquip_img1(path);
+		eqp.setInsuranceInvoice(path);
 
 		dao.save(eqp);
 
@@ -107,20 +115,25 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public byte[] downloadInserInc(long id) throws IOException {
-		// TODO Auto-generated method stub
+		Equipment eqp = dao.findById(id).orElseThrow();
+
+		if (eqp.getInsuranceInvoice() != null) {
+			return FileUtils.readFileToByteArray(new File(eqp.getInsuranceInvoice()));
+		}
+
 		return null;
 	}
 
 	@Override
-	public String uploadRcBook(long id, MultipartFile img) throws IOException {
+	public String uploadRcBook(long id, MultipartFile file) throws IOException {
 
 		Equipment eqp = dao.findById(id).orElseThrow(() -> new RuntimeException());
 
-		String path = folderlocation.concat(img.getOriginalFilename());
+		String path = folderlocation.concat(file.getOriginalFilename());
 
-		FileUtils.writeByteArrayToFile(new File(path), img.getBytes());
+		FileUtils.writeByteArrayToFile(new File(path), file.getBytes());
 
-		eqp.setEquip_img1(path);
+		eqp.setRcBook(path);
 
 		dao.save(eqp);
 
@@ -129,7 +142,12 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public byte[] downloadRcBook(long id) throws IOException {
-		// TODO Auto-generated method stub
+		Equipment eqp = dao.findById(id).orElseThrow();
+
+		if (eqp.getRcBook() != null) {
+			return FileUtils.readFileToByteArray(new File(eqp.getRcBook()));
+		}
+
 		return null;
 	}
 

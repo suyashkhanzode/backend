@@ -22,9 +22,10 @@ public class FileController {
 	@Autowired
 	private FileService service;
 	
-	@PostMapping(value = "/{eqpid}/image1",consumes = MediaType.ALL_VALUE)
+	@PostMapping(value = "/image1/{eqpid}",consumes = MediaType.ALL_VALUE)
 	public String uploadImg1(@PathVariable long eqpid, @RequestParam("img1") MultipartFile img1) throws  IOException
 	{
+		
 		 String msg =  service.uploadImg1(eqpid, img1);
 		 
 		 if(msg != null)
@@ -50,5 +51,35 @@ public class FileController {
 		       }
 		
 	}
+	
+	@PostMapping(value = "/image2/{eqpid}",consumes = MediaType.ALL_VALUE)
+	public String uploadImg2(@PathVariable long eqpid, @RequestParam("img1") MultipartFile img1) throws  IOException
+	{
+		 String msg =  service.uploadImg2(eqpid, img1);
+		 
+		 if(msg != null)
+		 {
+			 return msg;
+		 }
+		 else {
+			 return "File Not Uploaded";
+		 }
+	}
+	
+	@GetMapping(value = "/image2/{eqpid}",produces = MediaType.ALL_VALUE )
+	public byte[] doenloadImg2(@PathVariable long eqpid) throws IOException 
+	{
+		       byte[] img =   service.downloadImg2(eqpid);
+		       
+		       if(img != null)
+		       {
+		    	   return img;
+		       }
+		       else {
+		            return null;
+		       }
+		
+	}
+
 
 }
