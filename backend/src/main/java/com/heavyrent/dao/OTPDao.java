@@ -18,7 +18,7 @@ public interface OTPDao extends JpaRepository<OTPRecord, Long> {
   //SELECT * FROM otp_record WHERE email = :email AND timestamp > CURRENT_TIMESTAMP ORDER BY timestamp DESC LIMIT 1
     
     @Modifying
-    //@Transactional
+    @Transactional
     @Query("DELETE FROM OTPRecord WHERE timestamp < CURRENT_TIMESTAMP")
     void deleteExpiredRecords();
 }
