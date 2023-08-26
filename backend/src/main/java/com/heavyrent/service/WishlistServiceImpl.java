@@ -12,6 +12,7 @@ import com.heavyrent.dao.UserDao;
 import com.heavyrent.dao.WishlistDao;
 import com.heavyrent.dto.AddToWishlistDto;
 import com.heavyrent.dto.EquipmentDto;
+import com.heavyrent.dto.WishlistDto;
 import com.heavyrent.pojo.Equipment;
 import com.heavyrent.pojo.User;
 import com.heavyrent.pojo.Wishlist;
@@ -53,18 +54,36 @@ public class WishlistServiceImpl implements WishlistService{
 
 
 	@Override
-	public List<EquipmentDto> getCartEquipments(User user) {
+	public List<WishlistDto> getCartEquipments(User user) {
 		// TODO Auto-generated method stub
 		List<Wishlist> wishlist = wdao.findAllByUserOrderByCreatedDateDesc(user);
-		List<EquipmentDto> equipdto= new ArrayList<>();
-		
+		List<WishlistDto> equipdto= new ArrayList<>();
+		    
 		
 		for (Wishlist w : wishlist) {
-			
-			equipdto.add(equipservice.getEquipmentForWishlist(w.getEquipwlist()));
+			WishlistDto edto = new WishlistDto();
+			Equipment equipment = new Equipment();
+			edto.setWish_id(w.getWishlist_id());
+	        edto.setCity(w.getEquipwlist().getCity());
+	        edto.setCostPerDay(w.getEquipwlist().getCostPerDay());
+	        edto.setDescription(w.getEquipwlist().getDescription());
+	        edto.setEquipmentName(w.getEquipwlist().getEquipmentName());
+	        
+	        edto.setEqupId(w.getEquipwlist().getEqupId());
+	        edto.setStatus(w.getEquipwlist().getStatus());
+			equipdto.add(edto);
 			
 		}
 		return equipdto;
+	}
+
+
+
+	@Override
+	public String deleteFromWishlist(long wish_id) {
+		// TODO Auto-generated method stub
+		wdao.deleteById(wish_id);
+		return "item in wishlist deleted";
 	}
 	
 	

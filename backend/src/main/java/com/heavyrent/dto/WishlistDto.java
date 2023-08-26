@@ -1,5 +1,7 @@
 package com.heavyrent.dto;
 
+
+
 import java.time.Year;
 
 import com.heavyrent.pojo.Category;
@@ -19,7 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EquipmentDto {
+public class WishlistDto {
 	
     private Long equpId;
 	
@@ -50,21 +52,13 @@ public class EquipmentDto {
 	
 	private Status status;
 	
-    private String equip_img1;
-	
-
-	
-	
-	private String insuranceInvoice;
-	
-	
-	private String rcBook;
-	
+	//private User organization;
 	
 	private long orgId ;
 	
 
-
+    private long wish_id;
 
 
 }
+

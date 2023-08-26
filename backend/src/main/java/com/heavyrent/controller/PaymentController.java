@@ -2,6 +2,7 @@ package com.heavyrent.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import com.heavyrent.service.PaymentService;
 
 @RestController
 @RequestMapping("/payments")
+@CrossOrigin(origins = "*")
 public class PaymentController {
 	
 	@Autowired
@@ -36,7 +38,7 @@ public class PaymentController {
             
     		                                             
 	
-	        Orders order= orderservice.getOrderById(orderId);
+	        Orders order= orderservice.getOrder(orderId);
 	 
 	  
         try {

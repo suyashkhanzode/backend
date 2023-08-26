@@ -1,7 +1,9 @@
 package com.heavyrent.service;
 
 
+
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +56,18 @@ public class EquipmentServiceImpl implements EquipmentService {
 		return mapper.map(eqp, EquipmentDto.class);
 	}
 
-	
+
+	@Override
+	public Equipment getEquipment(long id) {
+		  
+	Equipment equipment=	 dao.findById(id).orElseThrow(()->new WishlistException("Invalid equipment ID !!!!!"));
+		return equipment;
+
+  
+	}
   
   
+
 	public EquipmentDto getEquipmentDto(long id) {
 		   
 		    EquipmentDto dto = new EquipmentDto();
@@ -136,4 +147,26 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	
+	
+	
+	
+	
+	
+	@Override
+	public List<EquipmentDto> getAllEquipment() {
+		
+		    List<Equipment> eqp =  dao.findAll();
+		    List<EquipmentDto> eqpDto = new ArrayList<EquipmentDto>();
+		    
+		    eqp.forEach(equipment ->{
+		    	eqpDto.add(new EquipmentDto(equipment.getEqupId(), equipment.getEquipmentName(), equipment.getCategory()
+		    			, equipment.getYearOfMfg(), equipment.getDescription(), equipment.isInsurance_status(), 
+		    			equipment.getCity(), equipment.getModelNo(), equipment.getCostPerDay(), equipment.getParkLocation(), 
+		    			equipment.getRtoNo(), equipment.getStatus(), equipment.getEquip_img1(), equipment.getInsuranceInvoice(), 
+		    			equipment.getRcBook(), equipment.getOrganization().getUserId()));
+		    });
+		    
+		
+		return eqpDto;
+	}
 }

@@ -14,6 +14,7 @@ import com.heavyrent.dao.EquipmentDao;
 import com.heavyrent.dao.OrderDao;
 import com.heavyrent.dto.OrderRequestDto;
 import com.heavyrent.dto.OrderResponseDto;
+import com.heavyrent.dto.UserResponse;
 import com.heavyrent.pojo.Equipment;
 import com.heavyrent.pojo.OrderStatus;
 import com.heavyrent.pojo.Orders;
@@ -33,11 +34,12 @@ public class OrderServiceImpl  implements OrderService{
 	@Autowired
 	private OrderDao orderdao;
 	
-	@Autowired
+
     private EquimentManagementService service;
 	
 	@Autowired
 	private ModelMapper  mapper;
+
 
 	@Override
 	public Orders placeOrderService(OrderRequestDto odto, Equipment equipment, User user) {
@@ -55,7 +57,9 @@ public class OrderServiceImpl  implements OrderService{
 		order.setOrderStatus(odto.getOrderStatus());
 		order.setOrderTill(odto.getOrderTill());
 		order.setOrganisationId(equipment.getOrganization().getUserId());
+
 		service.rentEuipment(equipment.getEqupId());
+
 		order.setReturnStatus(false);
 		Orders or=orderdao.save(order);
 		return  or;
@@ -90,6 +94,7 @@ public class OrderServiceImpl  implements OrderService{
 		return orderdto;
 	}
 
+	
 	@Override
 	public String confirmOrder(long ord_id) {
 		// TODO Auto-generated method stub
@@ -102,7 +107,6 @@ public class OrderServiceImpl  implements OrderService{
     
 		return "order confirmed";
 	}
-
 	@Override
 	public Orders getOrderById(long ord_id) {
 		// TODO Auto-generated method stub
@@ -110,6 +114,8 @@ public class OrderServiceImpl  implements OrderService{
 
 		return ord1;
 	}
+
+	
 
 	@Override
 	public String returnOrder(long ord_id) {
@@ -154,55 +160,20 @@ public class OrderServiceImpl  implements OrderService{
 		return orderdto;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	 @Override
 		public List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date) {
-			List<Orders> ord=orderdao.findAllByOrganisationIdAndOrderDate(org_id,date);
+			List<Orders> ord=orderdao.findAllByOrganisationIdAndOrderDate(org_id, date);
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 			List<OrderResponseDto> orderdto=new ArrayList<>();
 			Equipment equipment = new Equipment();
 			Payment payment = new Payment();
@@ -221,6 +192,16 @@ public class OrderServiceImpl  implements OrderService{
 			
 			return orderdto;
 		}
+
+	@Override
+	public Orders getOrder(long ord_id) {
+		// TODO Auto-generated method stub
+		Orders ord1 =orderdao.findById(ord_id).orElseThrow(()->new ResourceNotFoundException("order not found"));
+		
+		return ord1;
+	}
+
+
 
 
 }

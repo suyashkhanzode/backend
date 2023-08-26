@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.hibernate.annotations.ManyToAny;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -36,9 +38,11 @@ public class Orders {
 	private int orderId;
 	
 	@Column(name = "order_on")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private Date orderOn;
 	
 	@Column(name = "order_till")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private Date orderTill;
 	
 	@Column(name = "return_status")
@@ -52,6 +56,7 @@ public class Orders {
 	private OrderStatus orderStatus;
 	
 	@Column(name = "order_date")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private Date orderDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
