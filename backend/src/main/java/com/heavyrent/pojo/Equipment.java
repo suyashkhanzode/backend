@@ -42,7 +42,7 @@ public class Equipment {
 	private Category category;
 	
 	@Column(name = "year_of_mfg")
-	private Year yearOfMfg;
+	private String yearOfMfg;
 	
 	
 	private String description;

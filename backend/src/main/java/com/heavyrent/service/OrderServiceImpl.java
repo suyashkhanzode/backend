@@ -54,7 +54,7 @@ public class OrderServiceImpl  implements OrderService{
 		order.setCostPerDay(odto.getCostPerDay());
 		order.setOrderStatus(odto.getOrderStatus());
 		order.setOrderTill(odto.getOrderTill());
-		order.setOrganisationId(user.getUserId());
+		order.setOrganisationId(equipment.getOrganization().getUserId());
 		order.setReturnStatus(false);
 		Orders or=orderdao.save(order);
 		return  or;
@@ -89,6 +89,7 @@ public class OrderServiceImpl  implements OrderService{
 		return orderdto;
 	}
 
+	
 	@Override
 	public String confirmOrder(long ord_id) {
 		// TODO Auto-generated method stub
@@ -101,7 +102,6 @@ public class OrderServiceImpl  implements OrderService{
     
 		return "order confirmed";
 	}
-
 	@Override
 	public Orders getOrderById(long ord_id) {
 		// TODO Auto-generated method stub
@@ -109,6 +109,8 @@ public class OrderServiceImpl  implements OrderService{
 
 		return ord1;
 	}
+
+	
 
 	@Override
 	public String returnOrder(long ord_id) {
@@ -153,24 +155,36 @@ public class OrderServiceImpl  implements OrderService{
 		return orderdto;
 	}
 
-	@Override
-	public List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date) {
-		List<Orders> ord=orderdao.findAllByOrderIdAndOrderOn(org_id,date);
-		List<OrderResponseDto> orderdto=new ArrayList<>();
-		Equipment equipment = new Equipment();
-		
-		for(Orders o : ord) {
-			equipment.setEquip_img1(o.getEquipment().getEquip_img1());   
-	        equipment.setEqupId(o.getEquipment().getEqupId());;
-	        equipment.setEquipmentName(o.getEquipment().getEquipmentName());
-	        equipment.setCity(o.getEquipment().getCity());
-	        equipment.setModelNo(o.getEquipment().getModelNo());
-	        o.setEquipment(equipment);
-	        orderdto.add(mapper.map(o, OrderResponseDto.class));
+	 @Override
+		public List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date) {
+			List<Orders> ord=orderdao.findAllByOrganisationIdAndOrderDate(org_id, date);
+			List<OrderResponseDto> orderdto=new ArrayList<>();
+			Equipment equipment = new Equipment();
+			Payment payment = new Payment();
+			for(Orders o : ord) {
+				payment.setPaymentId(o.getPayment().getPaymentId());
+	            payment.setPayStatus(o.getPayment().getPayStatus());
+				equipment.setEquip_img1(o.getEquipment().getEquip_img1());   
+		        equipment.setEqupId(o.getEquipment().getEqupId());;
+		        equipment.setEquipmentName(o.getEquipment().getEquipmentName());
+		        equipment.setCity(o.getEquipment().getCity());
+		        equipment.setModelNo(o.getEquipment().getModelNo());
+		        o.setEquipment(equipment);
+		        o.setPayment(payment);
+		        orderdto.add(mapper.map(o, OrderResponseDto.class));
+			}
+			
+			return orderdto;
 		}
+
+	@Override
+	public Orders getOrder(long ord_id) {
+		// TODO Auto-generated method stub
+		Orders ord1 =orderdao.findById(ord_id).orElseThrow(()->new ResourceNotFoundException("order not found"));
 		
-		return orderdto;
+		return ord1;
 	}
+
 
 
 }

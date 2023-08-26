@@ -1,6 +1,9 @@
 package com.heavyrent.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,4 +100,39 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	@Override
+	public List<EquipmentDto> getAllEquipment() {
+		
+		    List<Equipment> eqp =  dao.findAll();
+		    List<EquipmentDto> eqpDto = new ArrayList<EquipmentDto>();
+		    
+		    eqp.forEach(equipment ->{
+		    	eqpDto.add(new EquipmentDto(equipment.getEqupId(), equipment.getEquipmentName(), equipment.getCategory()
+		    			, equipment.getYearOfMfg(), equipment.getDescription(), equipment.isInsurance_status(), 
+		    			equipment.getCity(), equipment.getModelNo(), equipment.getCostPerDay(), equipment.getParkLocation(), 
+		    			equipment.getRtoNo(), equipment.getStatus(), equipment.getEquip_img1(), equipment.getInsuranceInvoice(), 
+		    			equipment.getRcBook(), equipment.getOrganization().getUserId()));
+		    });
+		    
+		
+		return eqpDto;
+	}
 }

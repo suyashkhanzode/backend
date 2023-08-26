@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,7 @@ import com.heavyrent.service.UserService;
 
 @RestController
 @RequestMapping("/order")
+@CrossOrigin(origins = "*")
 public class OrderController {
 
 	@Autowired
@@ -49,6 +52,7 @@ public class OrderController {
 		
 		System.out.println(user_id);
 		System.out.println(equipmentId);
+		//System.out.println(xyz);
 		 
 		        User user = userservice.getUserbyid(user_id);
 		        Equipment equipment = equipmentservice.getEquipment(equipmentId);
@@ -119,17 +123,18 @@ public class OrderController {
  		 
  	 }
          
-         @GetMapping("/get/{org_id}/{date}")
- 	    public ResponseEntity<List<OrderResponseDto>> getOrder(@RequestParam Long org_id,Date date) {
- 	       
- 		
- 		 try {
- 			 List<OrderResponseDto> order = orderservice.getTodaysOrderOfOrg(org_id,date);
- 			 
- 	            return ResponseEntity.ok(order);
- 	        } catch (Exception e) {
- 	        	 throw new WishlistException("Failed to retrieve Order items.");
- 	        }
- 		 
- 	 }
+         @GetMapping("/getTodaysOrders")
+  	    public ResponseEntity<List<OrderResponseDto>> getOrder(@RequestParam Long org_id,@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
+  	       
+  		
+  		 try {
+  			 List<OrderResponseDto> order = orderservice.getTodaysOrderOfOrg(org_id,date);
+  			 
+  	            return ResponseEntity.ok(order);
+  	        } catch (Exception e) {
+  	        	 throw new WishlistException("Failed to retrieve Order items.");
+  	        }}
+  		 
+  		
+         
 }
