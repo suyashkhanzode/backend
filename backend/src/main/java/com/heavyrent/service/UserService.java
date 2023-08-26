@@ -17,6 +17,6 @@ public interface UserService {
 	User getUserbyid(Long user_id);
 	String setNewPassword(EmailPasswordDTO forPassRequest) ;
 	String setchangedPassword(EmailPasswordDTO forPassRequest) ;
-	String CustomerForUpdate(UserRequestDto userForUpdate);
+	User CustomerForUpdate(UserRequestDto userForUpdate);
 	String OrgForUpdate(UserRequestDto userForUpdate);
 }

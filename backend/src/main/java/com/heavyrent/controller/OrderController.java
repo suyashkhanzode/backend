@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -114,13 +115,13 @@ public class OrderController {
  			 
  	            return ResponseEntity.ok(order);
  	        } catch (Exception e) {
- 	        	 throw new WishlistException("Failed to retrieve Order items.");
+ 	        	 throw new WishlistException("Failed to retrieve Order items."); 
  	        }
  		 
  	 }
          
-         @GetMapping("/get/{org_id}/{date}")
- 	    public ResponseEntity<List<OrderResponseDto>> getOrder(@RequestParam Long org_id,Date date) {
+         @GetMapping("/getTodaysOrders")
+ 	    public ResponseEntity<List<OrderResponseDto>> getOrder(@RequestParam Long org_id,@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
  	       
  		
  		 try {

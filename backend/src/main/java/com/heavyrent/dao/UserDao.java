@@ -30,7 +30,6 @@ public interface UserDao  extends JpaRepository<User, Long>{
 ////			+"AND u.RoleType='CUSTOMER'")
 //	List<User> findAllByRole(String keyword,String column);
 	
-	List<User> findByEmailContainingAndAddressContainingAndNameContaining(
-            String email,String address,String name);
+	List<User> findByEmailContainingAndAddressContainingAndNameContaining(String email,String address,String name);
 	
 }

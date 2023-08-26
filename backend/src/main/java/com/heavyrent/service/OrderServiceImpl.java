@@ -155,17 +155,20 @@ public class OrderServiceImpl  implements OrderService{
 
 	@Override
 	public List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date) {
-		List<Orders> ord=orderdao.findAllByOrderIdAndOrderOn(org_id,date);
+		List<Orders> ord=orderdao.findAllByOrganisationIdAndOrderDate(org_id,date);
 		List<OrderResponseDto> orderdto=new ArrayList<>();
 		Equipment equipment = new Equipment();
-		
+		Payment payment = new Payment();
 		for(Orders o : ord) {
+			payment.setPaymentId(o.getPayment().getPaymentId());
+            payment.setPayStatus(o.getPayment().getPayStatus());
 			equipment.setEquip_img1(o.getEquipment().getEquip_img1());   
 	        equipment.setEqupId(o.getEquipment().getEqupId());;
 	        equipment.setEquipmentName(o.getEquipment().getEquipmentName());
 	        equipment.setCity(o.getEquipment().getCity());
 	        equipment.setModelNo(o.getEquipment().getModelNo());
 	        o.setEquipment(equipment);
+	        o.setPayment(payment);
 	        orderdto.add(mapper.map(o, OrderResponseDto.class));
 		}
 		

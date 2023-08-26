@@ -3,6 +3,7 @@ package com.heavyrent.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.heavyrent.dto.MsgWithReqStatusResponse;
 import com.heavyrent.dto.UserRequestDto;
 import com.heavyrent.dto.EmailPasswordDTO;
 import com.heavyrent.dto.UserResponse;
+import com.heavyrent.pojo.User;
 import com.heavyrent.service.UserService;
 
 import jakarta.validation.Valid;
@@ -22,6 +24,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("http://localhost:3000")
 public class UserController {
 
 	@Autowired
@@ -52,9 +55,9 @@ public class UserController {
 	}
 	
 	@PutMapping("/update/customer")
-	public ResponseEntity<MsgWithReqStatusResponse> updateCustomer(@RequestBody UserRequestDto userForUpdate){
-		String message=userService.CustomerForUpdate(userForUpdate);
-		return ResponseEntity.ok(new MsgWithReqStatusResponse(message,true));
+	public User updateCustomer(@RequestBody UserRequestDto userForUpdate){
+		
+		return userService.CustomerForUpdate(userForUpdate);
 	}
 	
 	@PutMapping("/update/organization")

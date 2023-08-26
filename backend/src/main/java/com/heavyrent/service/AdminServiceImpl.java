@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.heavyrent.dao.UserDao;
 import com.heavyrent.dto.UserResponse;
+import com.heavyrent.pojo.Document;
 import com.heavyrent.pojo.RoleType;
 import com.heavyrent.pojo.User;
 
@@ -30,6 +31,12 @@ public class AdminServiceImpl implements AdminService {
 				
 		List<UserResponse> user=new ArrayList<UserResponse>();
 		for(User u : userFormDb) {
+			Document doc=new Document();
+			doc.setAadharDoc(u.getDocument().getAadharDoc());
+			doc.setPanDoc(u.getDocument().getPanDoc());
+			doc.setCommpanyVerDoc1(u.getDocument().getCommpanyVerDoc1());
+			doc.setCommpanyVerDoc2(u.getDocument().getCommpanyVerDoc2());
+			u.setDocument(doc);
 			user.add(mapper.map(u, UserResponse.class));
 		}
 		return user;
@@ -38,11 +45,13 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public List<UserResponse> searchUsersWithFilters(String email, String address, String name) {
-		List<User> userFormDb= userDao.findByEmailContainingAndAddressContainingAndNameContaining(
-            email, address, name);
+		List<User> userFormDb= 
+				userDao.findByEmailContainingAndAddressContainingAndNameContaining(
+				email, address, name);
         
         List<UserResponse> user=new ArrayList<UserResponse>();
 		for(User u : userFormDb) {
+			
 			user.add(mapper.map(u, UserResponse.class));
 		}
         
