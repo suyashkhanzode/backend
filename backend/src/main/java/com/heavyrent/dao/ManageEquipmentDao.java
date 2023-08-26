@@ -14,5 +14,7 @@ public interface ManageEquipmentDao extends JpaRepository<Equipment, User>{
 	
 	
 	List<Equipment> findByOrganization(User user);
+	
+	
 
 }

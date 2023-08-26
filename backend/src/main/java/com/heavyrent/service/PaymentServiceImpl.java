@@ -19,6 +19,9 @@ public class PaymentServiceImpl implements PaymentService{
     @Autowired
     private OrderDao orderdao;
     
+    @Autowired
+    private EquimentManagementService service;
+    
 	
 	@Override
 	public String doPayment(Orders order,PaymentRequestDto pdto) {
@@ -34,6 +37,7 @@ public class PaymentServiceImpl implements PaymentService{
 		pdao.save(payment);
 		order.setPayment(payment);
 		orderdao.save(order);
+		service.rentEuipment(order.getEquipment().getEqupId());
 		return "payment done sucessfully";
 	}
 

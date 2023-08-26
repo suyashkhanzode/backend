@@ -56,7 +56,7 @@ public class GetAllEquipmentDto {
 	
 	private String equip_img1;
 	
-	private String equip_img2;
+	
 	
 	private String rtoNo;
 	

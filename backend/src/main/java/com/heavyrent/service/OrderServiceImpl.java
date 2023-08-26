@@ -1,9 +1,11 @@
 package com.heavyrent.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.el.stream.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,11 @@ public class OrderServiceImpl  implements OrderService{
 	@Autowired
 	private OrderDao orderdao;
 	
-
+	@Autowired
+    private EquimentManagementService service;
+	
+	@Autowired
+	private ModelMapper  mapper;
 
 	@Override
 	public Orders placeOrderService(OrderRequestDto odto, Equipment equipment, User user) {
@@ -48,7 +54,8 @@ public class OrderServiceImpl  implements OrderService{
 		order.setCostPerDay(odto.getCostPerDay());
 		order.setOrderStatus(odto.getOrderStatus());
 		order.setOrderTill(odto.getOrderTill());
-		order.setOrganisationId(user.getUserId());
+		order.setOrganisationId(equipment.getOrganization().getUserId());
+		service.rentEuipment(equipment.getEqupId());
 		order.setReturnStatus(false);
 		Orders or=orderdao.save(order);
 		return  or;
@@ -146,6 +153,74 @@ public class OrderServiceImpl  implements OrderService{
 		
 		return orderdto;
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 @Override
+		public List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date) {
+			List<Orders> ord=orderdao.findAllByOrganisationIdAndOrderDate(org_id,date);
+			List<OrderResponseDto> orderdto=new ArrayList<>();
+			Equipment equipment = new Equipment();
+			Payment payment = new Payment();
+			for(Orders o : ord) {
+				payment.setPaymentId(o.getPayment().getPaymentId());
+	            payment.setPayStatus(o.getPayment().getPayStatus());
+				equipment.setEquip_img1(o.getEquipment().getEquip_img1());   
+		        equipment.setEqupId(o.getEquipment().getEqupId());;
+		        equipment.setEquipmentName(o.getEquipment().getEquipmentName());
+		        equipment.setCity(o.getEquipment().getCity());
+		        equipment.setModelNo(o.getEquipment().getModelNo());
+		        o.setEquipment(equipment);
+		        o.setPayment(payment);
+		        orderdto.add(mapper.map(o, OrderResponseDto.class));
+			}
+			
+			return orderdto;
+		}
 
 
 }

@@ -1,5 +1,6 @@
 package com.heavyrent.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.el.stream.Optional;
@@ -24,5 +25,11 @@ public interface OrderService {
 	Orders getOrderById(long ord_id);
 	 
 	String returnOrder(long ord_id ); 
+	
+	
+	
+	
+	
+	 List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date);
 	
 }
