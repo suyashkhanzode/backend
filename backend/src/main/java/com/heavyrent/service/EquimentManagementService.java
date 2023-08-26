@@ -13,4 +13,8 @@ public interface EquimentManagementService {
 	public  Status  disableEquipment(long id);
 	
 	public  Status enableEquipment(long id);
+	
+	public Status rentEuipment(long id);
+	
+	public String  deleteEquipment(long id);
 }

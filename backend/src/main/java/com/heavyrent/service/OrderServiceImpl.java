@@ -34,9 +34,11 @@ public class OrderServiceImpl  implements OrderService{
 	@Autowired
 	private OrderDao orderdao;
 	
-	@Autowired
-	private ModelMapper mapper;
+
+    private EquimentManagementService service;
 	
+	@Autowired
+	private ModelMapper  mapper;
 
 
 	@Override
@@ -55,6 +57,9 @@ public class OrderServiceImpl  implements OrderService{
 		order.setOrderStatus(odto.getOrderStatus());
 		order.setOrderTill(odto.getOrderTill());
 		order.setOrganisationId(equipment.getOrganization().getUserId());
+
+		service.rentEuipment(equipment.getEqupId());
+
 		order.setReturnStatus(false);
 		Orders or=orderdao.save(order);
 		return  or;
@@ -155,9 +160,20 @@ public class OrderServiceImpl  implements OrderService{
 		return orderdto;
 	}
 
+
 	 @Override
 		public List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date) {
 			List<Orders> ord=orderdao.findAllByOrganisationIdAndOrderDate(org_id, date);
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 			List<OrderResponseDto> orderdto=new ArrayList<>();
 			Equipment equipment = new Equipment();
 			Payment payment = new Payment();
@@ -184,6 +200,7 @@ public class OrderServiceImpl  implements OrderService{
 		
 		return ord1;
 	}
+
 
 
 

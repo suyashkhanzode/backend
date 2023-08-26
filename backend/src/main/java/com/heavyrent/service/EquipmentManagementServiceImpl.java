@@ -53,6 +53,7 @@ public class EquipmentManagementServiceImpl implements EquimentManagementService
 			    dto.setModelNo(eqp.getModelNo());
 			    org.setUserId(eqp.getOrganization().getUserId());
 			    dto.setOrganization(org);
+			    dto.setEquip_img1(eqp.getEquip_img1());
 			    getEqpList.add(dto);
 			
 		}
@@ -78,9 +79,33 @@ public class EquipmentManagementServiceImpl implements EquimentManagementService
 		
 		Equipment eqp = eqpDao.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equimnet Not found"));
 		
-	     eqp.setStatus(Status.AVAILABLE);
+		if(eqp.getStatus() == Status.RENTED) {
+	     return Status.CANNOTDISABLED;
+		}
+			eqp.setStatus(Status.AVAILABLE);
+	     
 	     
 	     return eqp.getStatus();
+	}
+
+	@Override
+	public Status rentEuipment(long id) {
+		
+		Equipment eqp = eqpDao.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equimnet Not found"));
+		
+	     eqp.setStatus(Status.RENTED);
+		return eqp.getStatus();
+	}
+
+	@Override
+	public String deleteEquipment(long id) {
+		
+		Equipment eqp = eqpDao.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equimnet Not found"));
+		eqp.setOrganization(null);
+		dao.delete(eqp);
+		
+		return "Equipment Deleted Successfully";
+		
 	}
 
 	

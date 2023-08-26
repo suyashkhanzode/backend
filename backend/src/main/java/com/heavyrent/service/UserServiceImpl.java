@@ -30,12 +30,14 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
       //User user=userDao.findById(user_id).orElseThrow(()->new WishlistException("Invalid user ID !!!!!"));
 		//return user;
+		
 		return userDao.findById(user_id)
 	            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 	}
 
 	@Override
 	public UserResponse getUserDetails(LoginRequestAuth loginRequestobj) {
+		
 		User userFromDB = userDao.findByEmailAndPassword(loginRequestobj.getEmail(),loginRequestobj.getPassword())
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Email Id or Password !!!!!"));
 		return mapper.map(userFromDB, UserResponse.class);

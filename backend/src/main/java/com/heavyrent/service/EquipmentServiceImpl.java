@@ -1,13 +1,19 @@
 package com.heavyrent.service;
 
 
+
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.heavyrent.custom_exception.ResourceNotFoundException;
 import com.heavyrent.custom_exception.WishlistException;
 import com.heavyrent.dao.EquipmentDao;
 import com.heavyrent.dao.UserDao;
@@ -31,14 +37,25 @@ public class EquipmentServiceImpl implements EquipmentService {
 	@Autowired
 	private UserDao daoUser;
 	
+	@Autowired
+	private ModelMapper mapper;
+	
+	
 	@Override
-	public Equipment addEquipment(Equipment equipment) {
+	public EquipmentDto addEquipment(Equipment equipment,long orgId)  {
+		
+		User organization = daoUser.findById(orgId).orElseThrow(() -> new ResourceNotFoundException("Organization With Given Id Is Not Found"));
+		
+		equipment.setOrganization(organization);
 		
 		//To save equipment
 		 Equipment eqp = dao.save(equipment);
-		
-		return eqp;
+		EquipmentDto dto = new EquipmentDto(); 
+		 
+		 
+		return mapper.map(eqp, EquipmentDto.class);
 	}
+
 
 	@Override
 	public Equipment getEquipment(long id) {
@@ -50,11 +67,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
   
   
-  
-  
-  
-  
-  
+
 	public EquipmentDto getEquipmentDto(long id) {
 		   
 		    EquipmentDto dto = new EquipmentDto();
@@ -75,6 +88,10 @@ public class EquipmentServiceImpl implements EquipmentService {
 		    dto.setStatus(eqp.getStatus());
 		    dto.setRtoNo(eqp.getRtoNo());
 		    dto.setModelNo(eqp.getModelNo());
+		    dto.setEquip_img1(eqp.getEquip_img1());
+		   
+		    dto.setRcBook(eqp.getRcBook());
+		    dto.setInsuranceInvoice(eqp.getInsuranceInvoice());
 		
 		return dto;
 
@@ -99,23 +116,40 @@ public class EquipmentServiceImpl implements EquipmentService {
 		return equipdto;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
+
+
+	@Override
+	public List<EquipmentDto> getAllEquipment() {
+		
+		    List<Equipment> eqp =  dao.findAll();
+		    List<EquipmentDto> eqpDto = new ArrayList<EquipmentDto>();
+		    
+		    eqp.forEach(equipment ->{
+		    	eqpDto.add(new EquipmentDto(equipment.getEqupId(), equipment.getEquipmentName(), equipment.getCategory()
+		    			, equipment.getYearOfMfg(), equipment.getDescription(), equipment.isInsurance_status(), 
+		    			equipment.getCity(), equipment.getModelNo(), equipment.getCostPerDay(), equipment.getParkLocation(), 
+		    			equipment.getRtoNo(), equipment.getStatus(), equipment.getEquip_img1(), equipment.getInsuranceInvoice(), 
+		    			equipment.getRcBook(), equipment.getOrganization().getUserId()));
+		    });
+		    
+		
+		return eqpDto;
+	}
+
+
+
+
+	@Override
+	public Equipment getEquipment(long equipmentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
+	
 	
 	
 	@Override

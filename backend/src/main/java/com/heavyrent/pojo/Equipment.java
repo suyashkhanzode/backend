@@ -20,11 +20,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "equip_tbl")
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Equipment {
@@ -64,7 +66,7 @@ public class Equipment {
 	
 	private String equip_img1;
 	
-	private String equip_img2;
+	
 	
 	private String rtoNo;
 	

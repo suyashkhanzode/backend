@@ -122,6 +122,30 @@ public class OrderController {
  	        }
  		 
  	 }
+
+       
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+
          
          @GetMapping("/getTodaysOrders")
   	    public ResponseEntity<List<OrderResponseDto>> getOrder(@RequestParam Long org_id,@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
@@ -133,8 +157,10 @@ public class OrderController {
   	            return ResponseEntity.ok(order);
   	        } catch (Exception e) {
   	        	 throw new WishlistException("Failed to retrieve Order items.");
+
   	        }}
   		 
   		
+
          
 }

@@ -1,5 +1,5 @@
 package com.heavyrent.pojo;
 
 public enum Status {
-RENTED,AVAILABLE,DISABLE
+RENTED,AVAILABLE,DISABLE,CANNOTDISABLED
 }

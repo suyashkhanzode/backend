@@ -50,7 +50,16 @@ public class EquipmentDto {
 	
 	private Status status;
 	
-	//private User organization;
+    private String equip_img1;
+	
+
+	
+	
+	private String insuranceInvoice;
+	
+	
+	private String rcBook;
+	
 	
 	private long orgId ;
 	

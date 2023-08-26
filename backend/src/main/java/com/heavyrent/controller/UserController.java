@@ -3,6 +3,7 @@ package com.heavyrent.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
 
 	@Autowired
@@ -48,6 +50,7 @@ public class UserController {
 	
 	@GetMapping("/edit/{userId}")
 	public ResponseEntity<UserResponse> getUserDetails(@PathVariable Long userId) {
+		System.out.println("In method");
 		return ResponseEntity.ok(mapper.map(userService.getUserbyid(userId),UserResponse.class));
 	}
 	
