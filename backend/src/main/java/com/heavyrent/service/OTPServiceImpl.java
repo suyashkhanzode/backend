@@ -131,7 +131,13 @@ public class OTPServiceImpl implements OTPService {
 
 
 	
-	
+	@Override
+	@Transactional
+	public void updateOtpByEmail(String email, String newOtp) {
+		otpDao.updateOtpByEmail(email, newOtp);
+		
+	}
+
 	
 
 

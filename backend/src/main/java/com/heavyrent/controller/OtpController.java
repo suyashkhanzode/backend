@@ -45,6 +45,28 @@ public class OtpController {
     }
     
     
+    @PostMapping("/resend-otp")
+    public ResponseEntity<EmailResponseDTO> resendOTP(@RequestBody EmailRequestDTO emailRequest) {
+        String email = emailRequest.getEmail();
+
+        // Generate OTP
+        String otp = otpService.generateOTP();
+
+        // Store OTP in database with the email
+        otpService.storeOTPInBackend(email, otp);
+
+        // Send OTP to the user's email
+        otpService.sendOTPByEmail(email, otp);
+        
+        //Update resent OTP value in database
+        otpService.updateOtpByEmail(email, otp);
+
+        String responseMessage = "OTP sent successfully!";
+        EmailResponseDTO responseDTO = new EmailResponseDTO(email, responseMessage);
+
+        return ResponseEntity.ok(responseDTO);
+    }
+    
     @PostMapping("/verify-otp")
     public ResponseEntity<VerifyOTPResponseDTO> verifyOTP(@RequestBody VerifyOTPRequestDTO request) {
         
