@@ -33,10 +33,11 @@ public class Wishlist {
 	@JoinColumn(name="equip_id")
 	private Equipment equipwlist;
 	
-	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id" )
 	private User user;
 	
 	@Column(name = "date_addin_wishlist")
 	private Date createdDate;
+	
 }

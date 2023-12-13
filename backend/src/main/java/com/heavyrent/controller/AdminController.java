@@ -2,6 +2,7 @@ package com.heavyrent.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.heavyrent.service.AdminService;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin("http://localhost:3000")
 public class AdminController {
 	
 	@Autowired
@@ -32,6 +34,7 @@ public class AdminController {
 	
 	@GetMapping("/search")
     public ResponseEntity<List<UserResponse>> searchUsers(
+    	@RequestParam(required = false) String mobileNo,
         @RequestParam(required = false) String email,
         @RequestParam(required = false) String address,
         @RequestParam(required = false) String name) {

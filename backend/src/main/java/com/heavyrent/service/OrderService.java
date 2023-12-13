@@ -26,10 +26,10 @@ public interface OrderService {
 	 
 	String returnOrder(long ord_id ); 
 	
-	
-	
-	
-	
 	 List<OrderResponseDto> getTodaysOrderOfOrg(long org_id,Date date);
+	 
+	 Orders   getOrder(long ord_id);
+	 
+	 
 	
 }

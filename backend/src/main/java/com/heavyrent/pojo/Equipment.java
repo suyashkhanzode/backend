@@ -66,8 +66,6 @@ public class Equipment {
 	
 	private String equip_img1;
 	
-	
-	
 	private String rtoNo;
 	
 	@Enumerated(EnumType.STRING)

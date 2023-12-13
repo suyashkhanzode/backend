@@ -1,5 +1,7 @@
 package com.heavyrent.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import com.heavyrent.dto.MsgWithReqStatusResponse;
 import com.heavyrent.dto.UserRequestDto;
 import com.heavyrent.dto.EmailPasswordDTO;
 import com.heavyrent.dto.UserResponse;
+import com.heavyrent.pojo.User;
 import com.heavyrent.service.UserService;
 
 import jakarta.validation.Valid;
@@ -23,7 +26,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	@Autowired
@@ -50,20 +53,25 @@ public class UserController {
 	
 	@GetMapping("/edit/{userId}")
 	public ResponseEntity<UserResponse> getUserDetails(@PathVariable Long userId) {
-		System.out.println("In method");
 		return ResponseEntity.ok(mapper.map(userService.getUserbyid(userId),UserResponse.class));
 	}
 	
 	@PutMapping("/update/customer")
-	public ResponseEntity<MsgWithReqStatusResponse> updateCustomer(@RequestBody UserRequestDto userForUpdate){
-		String message=userService.CustomerForUpdate(userForUpdate);
-		return ResponseEntity.ok(new MsgWithReqStatusResponse(message,true));
+	public User updateCustomer(@RequestBody UserRequestDto userForUpdate){
+		
+		return userService.CustomerForUpdate(userForUpdate);
 	}
 	
 	@PutMapping("/update/organization")
 	public ResponseEntity<MsgWithReqStatusResponse> updateOrganization(@RequestBody UserRequestDto userForUpdate){
 		String message=userService.OrgForUpdate(userForUpdate);
 		return ResponseEntity.ok(new MsgWithReqStatusResponse(message,true));
+	}
+	
+	@GetMapping("/allUsers")
+	public List<UserResponse> getAllUser() {
+		
+		return userService.getAllUser();
 	}
 	
 }

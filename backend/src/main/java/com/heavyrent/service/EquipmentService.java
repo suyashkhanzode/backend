@@ -21,5 +21,6 @@ public interface EquipmentService {
 	
 	public EquipmentDto getEquipmentForWishlist(Equipment equipment);
 	
+	public EquipmentDto updateEquipment(EquipmentDto equipment);
 
 }

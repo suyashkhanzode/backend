@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import com.heavyrent.custom_exception.ResourceNotFoundException;
 import com.heavyrent.dao.EquipmentDao;
 import com.heavyrent.dao.ManageEquipmentDao;
-import com.heavyrent.dto.GetAllEquipmentDto;
+import com.heavyrent.dto.EquipmentDto;
+
 import com.heavyrent.pojo.Equipment;
 import com.heavyrent.pojo.Status;
 import com.heavyrent.pojo.User;
@@ -20,96 +21,63 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class EquipmentManagementServiceImpl implements EquimentManagementService {
-	
+
 	@Autowired
 	private ManageEquipmentDao dao;
-	
+
 	@Autowired
 	private EquipmentDao eqpDao;
 
-	@Autowired
-	private ModelMapper map;
-	
 	@Override
-	public List<GetAllEquipmentDto> getAllEquipmentForOrganization(User user) {
-		List<Equipment> list = null;
-		list =  dao.findByOrganization(user) ;
-		
-		List<GetAllEquipmentDto> getEqpList = new ArrayList<GetAllEquipmentDto>();
-		
-		for (Equipment eqp : list) {
-			 
-			GetAllEquipmentDto dto = new GetAllEquipmentDto();
-			User org = new User();
-			    dto.setCategory(eqp.getCategory());
-			    dto.setCity(eqp.getCity());
-			    dto.setCostPerDay(eqp.getCostPerDay());
-			    dto.setDescription(eqp.getDescription());
-			    dto.setEquipmentName(eqp.getEquipmentName());
-			    dto.setEqupId(eqp.getEqupId());
-			    dto.setYearOfMfg(eqp.getYearOfMfg());
-			    dto.setStatus(eqp.getStatus());
-			    dto.setRtoNo(eqp.getRtoNo());
-			    dto.setModelNo(eqp.getModelNo());
-			    org.setUserId(eqp.getOrganization().getUserId());
-			    dto.setOrganization(org);
-			    dto.setEquip_img1(eqp.getEquip_img1());
-			    getEqpList.add(dto);
-			
-		}
-		
-		
-		
-		
-		return getEqpList;
+	public List<EquipmentDto> getAllEquipmentForOrganization(User user) {
+
+		List<Equipment> equipmentList = dao.findByOrganization(user);
+
+		List<EquipmentDto> returnedEquipmentList = new ArrayList<EquipmentDto>();
+
+		equipmentList.forEach(equipment -> {
+			returnedEquipmentList.add(new EquipmentDto(equipment.getEqupId(), equipment.getEquipmentName(),
+					equipment.getCategory(), equipment.getYearOfMfg(), equipment.getDescription(),
+					equipment.isInsurance_status(), equipment.getCity(), equipment.getModelNo(),
+					equipment.getCostPerDay(), equipment.getParkLocation(), equipment.getRtoNo(), equipment.getStatus(),
+					equipment.getEquip_img1(), equipment.getInsuranceInvoice(), equipment.getRcBook(),
+					equipment.getOrganization().getUserId()));
+		});
+
+		return returnedEquipmentList;
+
 	}
 
 	@Override
-	public Status  disableEquipment(long id) {
-		     Equipment eqp = eqpDao.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equimnet Not found"));
-				
-		     eqp.setStatus(Status.DISABLE);
-		     
-		     return eqp.getStatus();
-		
+	public Status disableEquipment(long id) {
+		Equipment eqp = eqpDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Equimnet Not found"));
+
+		eqp.setStatus(Status.DISABLE);
+
+		return eqp.getStatus();
+
 	}
 
 	@Override
 	public Status enableEquipment(long id) {
-		
-		Equipment eqp = eqpDao.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equimnet Not found"));
-		
-		if(eqp.getStatus() == Status.RENTED) {
-	     return Status.CANNOTDISABLED;
-		}
-			eqp.setStatus(Status.AVAILABLE);
-	     
-	     
-	     return eqp.getStatus();
-	}
 
-	@Override
-	public Status rentEuipment(long id) {
-		
-		Equipment eqp = eqpDao.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equimnet Not found"));
-		
-	     eqp.setStatus(Status.RENTED);
+		Equipment eqp = eqpDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Equimnet Not found"));
+
+		if (eqp.getStatus() == Status.RENTED) {
+			return Status.CANNOTDISABLED;
+		}
+		eqp.setStatus(Status.AVAILABLE);
+
 		return eqp.getStatus();
 	}
 
 	@Override
-	public String deleteEquipment(long id) {
-		
-		Equipment eqp = eqpDao.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equimnet Not found"));
-		eqp.setOrganization(null);
-		dao.delete(eqp);
-		
-		return "Equipment Deleted Successfully";
-		
+	public Status rentEuipment(long id) {
+
+		Equipment eqp = eqpDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Equimnet Not found"));
+
+		eqp.setStatus(Status.RENTED);
+		return eqp.getStatus();
 	}
-
-	
-
-	
 
 }

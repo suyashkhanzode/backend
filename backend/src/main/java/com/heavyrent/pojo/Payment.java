@@ -35,9 +35,7 @@ public class Payment {
 	@Column(length = 25)
 	private PaymentStatus payStatus;
 	
-//	@Column(name="paymnt_doc")
-//	private String paymentDocument;
-//	
+
 
 	@Column(name = "org_id")
 	private long organizationId;

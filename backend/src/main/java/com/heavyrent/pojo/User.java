@@ -8,14 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "user_tbl")
 public class User {
 
@@ -27,7 +25,7 @@ public class User {
 	@Column(length=100)
 	private String address;
 	
-	@Column(length=11)
+	@Column(name = "mobile_no" ,length=11)
 	private String mobile_no;
 	
 	@Column(length=10)
@@ -56,9 +54,12 @@ public class User {
 	@OneToMany(mappedBy = "organization", cascade =  CascadeType.ALL,orphanRemoval = true)
 	private List<Equipment> myEquipments = new ArrayList<Equipment>();
 	
-	@OneToOne
-	@JoinColumn(name="doc_id")
+	
+	
+	@OneToOne(mappedBy="user")
 	private Document document;
+	
+	
 	
 	
 	

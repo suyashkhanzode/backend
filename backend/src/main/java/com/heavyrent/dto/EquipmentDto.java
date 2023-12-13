@@ -51,9 +51,6 @@ public class EquipmentDto {
 	
     private String equip_img1;
 	
-
-	
-	
 	private String insuranceInvoice;
 	
 	

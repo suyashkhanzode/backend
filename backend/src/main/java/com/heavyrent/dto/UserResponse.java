@@ -1,6 +1,7 @@
 package com.heavyrent.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.heavyrent.pojo.Document;
 import com.heavyrent.pojo.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class UserResponse {
 	@JsonIgnore
 	private String password;
 	private RoleType role;
+	//private Document document;
 	
 }

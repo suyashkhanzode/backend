@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin( origins =  "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class LoginController {
 
 	@Autowired
@@ -24,8 +24,6 @@ public class LoginController {
 	
 	@PostMapping()
 	public ResponseEntity<UserResponse> signInEmployee(@RequestBody @Valid LoginRequestAuth loginRequestobj) {
-		
-		
 		
 		UserResponse resp = userService.getUserDetails(loginRequestobj);
 			return ResponseEntity.ok(resp);

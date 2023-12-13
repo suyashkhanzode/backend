@@ -25,27 +25,23 @@ import com.heavyrent.service.EquipmentService;
 @RequestMapping("/equipment")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EquipmentController {
-	
+
 	@Autowired
-	private EquipmentService service; 
-	
-	@PostMapping(value =  "/add/{orgId}",consumes = MediaType.ALL_VALUE)
-	public ResponseEntity<?>  addEquipment(@RequestBody Equipment eqp ,@PathVariable long orgId )
-	{
-		return new ResponseEntity<EquipmentDto>(service.addEquipment(eqp, orgId),HttpStatus.OK);
+	private EquipmentService service;
+
+	@PostMapping(value = "/add/{orgId}", consumes = MediaType.ALL_VALUE)
+	public ResponseEntity<?> addEquipment(@RequestBody Equipment eqp, @PathVariable long orgId) {
+		return new ResponseEntity<EquipmentDto>(service.addEquipment(eqp, orgId), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/get/{eqpId}")
-	public ResponseEntity<?> getEquipment(@PathVariable("eqpId") long eqpId)
-	{
-		return new ResponseEntity<EquipmentDto>(service.getEquipmentDto(eqpId),HttpStatus.OK);
+	public ResponseEntity<EquipmentDto> getEquipment(@PathVariable("eqpId") long eqpId) {
+		return new ResponseEntity<EquipmentDto>(service.getEquipmentDto(eqpId), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/getall")
-	public ResponseEntity<?> getAllEquipment()
-	{
-		return new ResponseEntity<List<EquipmentDto>>(service.getAllEquipment(),HttpStatus.OK);
+	public ResponseEntity<?> getAllEquipment() {
+		return new ResponseEntity<List<EquipmentDto>>(service.getAllEquipment(), HttpStatus.OK);
 	}
-	
 
 }

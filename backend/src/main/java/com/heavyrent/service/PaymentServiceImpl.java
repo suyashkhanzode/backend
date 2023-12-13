@@ -21,7 +21,6 @@ public class PaymentServiceImpl implements PaymentService{
     
     @Autowired
     private EquimentManagementService service;
-    
 	
 	@Override
 	public String doPayment(Orders order,PaymentRequestDto pdto) {

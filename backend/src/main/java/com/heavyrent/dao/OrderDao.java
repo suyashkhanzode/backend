@@ -13,8 +13,5 @@ public interface OrderDao  extends JpaRepository<Orders, Long>{
 	
 	 List<Orders> findAllByOrganisationIdOrderByOrderOnDesc(long OrganisationId);
 	 List<Orders> findAllByCustomerOrderByOrderOnDesc(User Customer);
-	 
-	 
-	 
 	 List<Orders> findAllByOrganisationIdAndOrderDate(long org_id,Date date);
 }

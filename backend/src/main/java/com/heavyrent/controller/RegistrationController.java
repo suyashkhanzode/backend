@@ -2,23 +2,20 @@ package com.heavyrent.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.heavyrent.dto.RegistrationRequestDTO;
-import com.heavyrent.dto.UserDto;
 import com.heavyrent.pojo.RoleType;
 import com.heavyrent.pojo.User;
 import com.heavyrent.service.RegistrationService;
 
-
-
-
-
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class RegistrationController {
   
 	@Autowired
@@ -57,17 +54,6 @@ public class RegistrationController {
 
         return ResponseEntity.ok("User registered successfully!");
     }
-    
-//    @PostMapping("/registerauth")
-//    public ResponseEntity<String> registerUser(@RequestBody UserDto dto) {
-//        
-//
-//         registrationService.registerUser(dto);
-//
-//        return ResponseEntity.ok("User registered successfully!");
-//    }
-    
-    
     
 
 }
